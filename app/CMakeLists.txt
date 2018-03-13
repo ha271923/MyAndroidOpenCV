@@ -5,10 +5,34 @@
 
 cmake_minimum_required(VERSION 3.4.1)
 
+set(lib_src_DIR ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI})
+include_directories(${CMAKE_SOURCE_DIR}/src/main/cpp/include)
+
+add_library( opencv_java3-lib
+        SHARED
+        IMPORTED)
+
+set_target_properties( # Specifies the target library.
+        opencv_java3-lib
+        # Specifies the parameter you want to define
+        PROPERTIES IMPORTED_LOCATION
+        # Provides the path to the library you want to import.
+        ${lib_src_DIR}/libopencv_java3.so)
+
+
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
+
+add_library( # Sets the name of the library.
+             imgCanny
+
+             # Sets the library as a shared library.
+             SHARED
+
+             # Provides a relative path to your source file(s).
+             src/main/cpp/imgCanny.cpp )
 
 add_library( # Sets the name of the library.
              native-lib
@@ -45,6 +69,8 @@ find_library( # Sets the name of the path variable.
 # build script, prebuilt third-party libraries, or system libraries.
 
 target_link_libraries( # Specifies the target library.
+                       imgCanny
+                       opencv_java3-lib
                        native-lib
                        testMessage
                        # Links the target library to the log library

@@ -10,6 +10,8 @@ public class MainActivity extends AppCompatActivity {
     static {
         System.loadLibrary("native-lib");
         System.loadLibrary("testMessage");
+        System.loadLibrary("imgCanny");
+        System.loadLibrary("opencv_java3");
     }
 
     @Override
@@ -28,4 +30,6 @@ public class MainActivity extends AppCompatActivity {
      */
     public native String stringFromJNI();
     public native String getTestStringFromJNI();
+    public native int[] getCannyImg(int[] a, int b, int c);
+
 }
